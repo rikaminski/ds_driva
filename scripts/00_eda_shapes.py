@@ -11,6 +11,7 @@ sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 from utils import (
     load_food, load_places, load_delivery, load_eb,
     load_cnaes, load_cnaes_desc, load_divida,
+    normalize_cnpj, validate_cnpj_column,
     section, subsection,
 )
 
@@ -73,6 +74,25 @@ def main():
     print(f"\n  Valores únicos por coluna:")
     for col in food.columns:
         print(f"    {col}: {food[col].nunique()} únicos")
+
+    # ── Integridade de CNPJs ───────────────────────────────────────────────
+    section("6. INTEGRIDADE DE CNPJs")
+    for name, df in datasets.items():
+        if "cnpj" in df.columns:
+            normed = normalize_cnpj(df["cnpj"])
+            total = len(df)
+            valid = normed.notna().sum()
+            invalid = total - valid
+            # Separar: vazios vs corrompidos
+            empty = (df["cnpj"].isna() | (df["cnpj"].astype(str).str.strip() == "")).sum()
+            corrupted = invalid - empty
+            status = "✅" if invalid == 0 else "⚠️"
+            print(f"  {name:12s} | válidos: {valid:6d}/{total} | corrompidos: {corrupted} | vazios: {empty} {status}")
+            if corrupted > 0:
+                bad_mask = normed.isna() & df["cnpj"].notna() & (df["cnpj"].astype(str).str.strip() != "")
+                for idx in df[bad_mask].index[:5]:
+                    print(f"    → {repr(df.loc[idx, 'cnpj'])}")
+    print()
 
 
 if __name__ == "__main__":

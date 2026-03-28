@@ -115,7 +115,7 @@ def main():
 
     # ── CNAEs secundários: contagem por CNPJ ──────────────────────────────
     section("8. CONTAGEM DE CNAEs SECUNDÁRIOS POR CNPJ")
-    secundarios = cnaes[cnaes["tipo_cnae"] != "primário"]
+    secundarios = cnaes[cnaes["tipo_cnae"] == "secundario"]
     sec_count = secundarios.groupby("cnpj_norm").size().reset_index(name="n_cnaes_sec")
     merged_sec = food[["cnpj_norm", "subsegmento"]].merge(sec_count, on="cnpj_norm", how="left")
     merged_sec["n_cnaes_sec"] = merged_sec["n_cnaes_sec"].fillna(0).astype(int)

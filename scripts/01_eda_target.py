@@ -8,6 +8,7 @@ Decisões: precisa oversample? class_weight basta?
 import sys
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 
+import pandas as pd
 from utils import load_food, section, subsection
 
 
@@ -26,9 +27,28 @@ def main():
 
     # ── Split train/test ───────────────────────────────────────────────────
     section("2. SPLIT TRAIN/TEST")
-    split_counts = food["split"].value_counts()
+    split_counts = food["split"].value_counts(dropna=False)
     for s in split_counts.index:
-        print(f"  {s:6s}: {split_counts[s]:5d} ({split_counts[s]/len(food)*100:.1f}%)")
+        label = str(s) if pd.notna(s) else "<SEM SPLIT>"
+        print(f"  {label:12s}: {split_counts[s]:5d} ({split_counts[s]/len(food)*100:.1f}%)")
+
+    # ── Registros sem split ─────────────────────────────────────────────
+    section("2a. REGISTROS SEM SPLIT")
+    no_split = food[food["split"].isna() | (food["split"] == "")]
+    train = food[food["split"] == "train"]
+    test = food[food["split"] == "test"]
+    print(f"  Total sem split: {len(no_split)} ({len(no_split)/len(food)*100:.1f}%)")
+    if len(no_split) > 0:
+        print(f"\n  Distribuição comparada:")
+        print(f"  {'Classe':20s} | {'Sem split':>10s} | {'Train':>8s} | {'Test':>8s}")
+        print(f"  {'-'*20} | {'-'*10} | {'-'*8} | {'-'*8}")
+        for cls in counts.index:
+            ns_pct = (no_split["subsegmento"] == cls).sum() / len(no_split) * 100 if len(no_split) > 0 else 0
+            tr_pct = (train["subsegmento"] == cls).sum() / len(train) * 100 if len(train) > 0 else 0
+            te_pct = (test["subsegmento"] == cls).sum() / len(test) * 100 if len(test) > 0 else 0
+            closest = "~train" if abs(ns_pct - tr_pct) < abs(ns_pct - te_pct) else "~test"
+            print(f"  {cls:20s} | {ns_pct:9.1f}% | {tr_pct:7.1f}% | {te_pct:7.1f}% ← {closest}")
+        print(f"\n  → Distribuição segue o padrão do {'TRAIN' if True else 'TEST'} — recomenda-se incluir no treino.")
 
     # ── Distribuição por split ─────────────────────────────────────────────
     section("3. DISTRIBUIÇÃO DE CLASSES POR SPLIT")

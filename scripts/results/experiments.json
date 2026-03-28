@@ -1,0 +1,326 @@
+[
+  {
+    "id": 1,
+    "timestamp": "2026-03-27T22:45:05.526639+00:00",
+    "model": "LightGBM",
+    "feature_set": "mrmr_top25",
+    "params": {
+      "n_estimators": 475,
+      "learning_rate": 0.012927968026156169,
+      "max_depth": 7,
+      "num_leaves": 46,
+      "min_child_samples": 20,
+      "subsample": 0.9043496910943705,
+      "colsample_bytree": 0.6774792191973141,
+      "reg_alpha": 3.508375262588906,
+      "reg_lambda": 1.1237593010837667e-06,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": -1
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.8487,
+      "train_f2_macro_std": 0.0056,
+      "val_f2_macro_mean": 0.7786,
+      "val_f2_macro_std": 0.0152,
+      "train_f1_macro_mean": 0.83,
+      "train_f1_macro_std": 0.0056,
+      "val_f1_macro_mean": 0.765,
+      "val_f1_macro_std": 0.0185,
+      "train_accuracy_mean": 0.8332,
+      "train_accuracy_std": 0.0057,
+      "val_accuracy_mean": 0.7712,
+      "val_accuracy_std": 0.0179
+    },
+    "test_metrics": {
+      "f2_macro": 0.7261,
+      "f1_macro": 0.7215,
+      "accuracy": 0.75
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced"
+  },
+  {
+    "id": 2,
+    "timestamp": "2026-03-27T23:01:33.117046+00:00",
+    "model": "CatBoost",
+    "feature_set": "mrmr_top25",
+    "params": {
+      "iterations": 577,
+      "learning_rate": 0.030034023428346823,
+      "depth": 8,
+      "l2_leaf_reg": 1.8611593917410802,
+      "border_count": 213,
+      "bagging_temperature": 0.28155316324336543,
+      "random_strength": 1.2892695473405666,
+      "auto_class_weights": "Balanced",
+      "random_seed": 42,
+      "verbose": 0
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.8555,
+      "train_f2_macro_std": 0.0132,
+      "val_f2_macro_mean": 0.7829,
+      "val_f2_macro_std": 0.0335,
+      "train_f1_macro_mean": 0.839,
+      "train_f1_macro_std": 0.0126,
+      "val_f1_macro_mean": 0.7717,
+      "val_f1_macro_std": 0.029,
+      "train_accuracy_mean": 0.8422,
+      "train_accuracy_std": 0.0167,
+      "val_accuracy_mean": 0.7824,
+      "val_accuracy_std": 0.0235
+    },
+    "test_metrics": {
+      "f2_macro": 0.7276,
+      "f1_macro": 0.7179,
+      "accuracy": 0.7419
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced"
+  },
+  {
+    "id": 3,
+    "timestamp": "2026-03-27T23:52:01.816553+00:00",
+    "model": "LightGBM",
+    "feature_set": "mrmr_top41",
+    "params": {
+      "n_estimators": 280,
+      "learning_rate": 0.01441127482970646,
+      "max_depth": 5,
+      "num_leaves": 32,
+      "min_child_samples": 29,
+      "subsample": 0.9787116801485165,
+      "colsample_bytree": 0.7264172639687807,
+      "reg_alpha": 0.0007390543847776541,
+      "reg_lambda": 0.0012114825357673934,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": -1
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.935,
+      "train_f2_macro_std": 0.0028,
+      "val_f2_macro_mean": 0.895,
+      "val_f2_macro_std": 0.0098,
+      "train_f1_macro_mean": 0.93,
+      "train_f1_macro_std": 0.0022,
+      "val_f1_macro_mean": 0.8913,
+      "val_f1_macro_std": 0.0085,
+      "train_accuracy_mean": 0.9146,
+      "train_accuracy_std": 0.0045,
+      "val_accuracy_mean": 0.8698,
+      "val_accuracy_std": 0.0095
+    },
+    "test_metrics": {
+      "f2_macro": 0.8365,
+      "f1_macro": 0.8327,
+      "accuracy": 0.879
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced"
+  },
+  {
+    "id": 4,
+    "timestamp": "2026-03-27T23:56:01.163310+00:00",
+    "model": "CatBoost",
+    "feature_set": "mrmr_top41",
+    "params": {
+      "iterations": 389,
+      "learning_rate": 0.17616060680108836,
+      "depth": 3,
+      "l2_leaf_reg": 5.660065675075363,
+      "border_count": 152,
+      "bagging_temperature": 0.4916593008451993,
+      "random_strength": 0.00242778270513743,
+      "auto_class_weights": "Balanced",
+      "random_seed": 42,
+      "verbose": 0
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.9238,
+      "train_f2_macro_std": 0.0095,
+      "val_f2_macro_mean": 0.8952,
+      "val_f2_macro_std": 0.0086,
+      "train_f1_macro_mean": 0.9208,
+      "train_f1_macro_std": 0.0093,
+      "val_f1_macro_mean": 0.8933,
+      "val_f1_macro_std": 0.0067,
+      "train_accuracy_mean": 0.9008,
+      "train_accuracy_std": 0.0121,
+      "val_accuracy_mean": 0.8711,
+      "val_accuracy_std": 0.0036
+    },
+    "test_metrics": {
+      "f2_macro": 0.8436,
+      "f1_macro": 0.8436,
+      "accuracy": 0.8871
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced"
+  },
+  {
+    "id": 5,
+    "timestamp": "2026-03-28T00:18:30.910656+00:00",
+    "model": "LightGBM",
+    "feature_set": "mrmr_top36",
+    "params": {
+      "n_estimators": 285,
+      "learning_rate": 0.03634095393864205,
+      "max_depth": 3,
+      "num_leaves": 55,
+      "min_child_samples": 45,
+      "subsample": 0.7648472892309599,
+      "colsample_bytree": 0.7349846641739401,
+      "reg_alpha": 1.9153924769214098e-06,
+      "reg_lambda": 1.8339959509204083e-06,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": -1
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.9457,
+      "train_f2_macro_std": 0.0024,
+      "val_f2_macro_mean": 0.8939,
+      "val_f2_macro_std": 0.0138,
+      "train_f1_macro_mean": 0.9437,
+      "train_f1_macro_std": 0.0024,
+      "val_f1_macro_mean": 0.8923,
+      "val_f1_macro_std": 0.0075,
+      "train_accuracy_mean": 0.9275,
+      "train_accuracy_std": 0.0024,
+      "val_accuracy_mean": 0.8735,
+      "val_accuracy_std": 0.0061
+    },
+    "test_metrics": {
+      "f2_macro": 0.8411,
+      "f1_macro": 0.8317,
+      "accuracy": 0.871
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced"
+  },
+  {
+    "id": 6,
+    "timestamp": "2026-03-28T00:22:43.145949+00:00",
+    "model": "CatBoost",
+    "feature_set": "mrmr_top36",
+    "params": {
+      "iterations": 468,
+      "learning_rate": 0.05302276989825104,
+      "depth": 3,
+      "l2_leaf_reg": 4.226445895570671,
+      "border_count": 49,
+      "bagging_temperature": 0.09036952166456277,
+      "random_strength": 0.8831861756748033,
+      "auto_class_weights": "Balanced",
+      "random_seed": 42,
+      "verbose": 0
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.915,
+      "train_f2_macro_std": 0.0032,
+      "val_f2_macro_mean": 0.8937,
+      "val_f2_macro_std": 0.0123,
+      "train_f1_macro_mean": 0.9117,
+      "train_f1_macro_std": 0.0035,
+      "val_f1_macro_mean": 0.8932,
+      "val_f1_macro_std": 0.0098,
+      "train_accuracy_mean": 0.892,
+      "train_accuracy_std": 0.005,
+      "val_accuracy_mean": 0.8698,
+      "val_accuracy_std": 0.0117
+    },
+    "test_metrics": {
+      "f2_macro": 0.8155,
+      "f1_macro": 0.8179,
+      "accuracy": 0.871
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced"
+  },
+  {
+    "id": 7,
+    "timestamp": "2026-03-28T00:42:24.936966+00:00",
+    "model": "LightGBM",
+    "feature_set": "mrmr_top39",
+    "params": {
+      "n_estimators": 147,
+      "learning_rate": 0.023238160952885455,
+      "max_depth": 5,
+      "num_leaves": 75,
+      "min_child_samples": 27,
+      "subsample": 0.7589190105458755,
+      "colsample_bytree": 0.602475586455046,
+      "reg_alpha": 1.3187741955337726,
+      "reg_lambda": 0.00036552871454697866,
+      "class_weight": "balanced",
+      "random_state": 42,
+      "verbosity": -1,
+      "n_jobs": -1
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.8973,
+      "train_f2_macro_std": 0.0031,
+      "val_f2_macro_mean": 0.8698,
+      "val_f2_macro_std": 0.0161,
+      "train_f1_macro_mean": 0.8772,
+      "train_f1_macro_std": 0.0032,
+      "val_f1_macro_mean": 0.8511,
+      "val_f1_macro_std": 0.0151,
+      "train_accuracy_mean": 0.8841,
+      "train_accuracy_std": 0.004,
+      "val_accuracy_mean": 0.8587,
+      "val_accuracy_std": 0.0074
+    },
+    "test_metrics": {
+      "f2_macro": 0.8285,
+      "f1_macro": 0.8285,
+      "accuracy": 0.871
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced"
+  },
+  {
+    "id": 8,
+    "timestamp": "2026-03-28T00:56:49.145670+00:00",
+    "model": "CatBoost",
+    "feature_set": "mrmr_top39",
+    "params": {
+      "iterations": 635,
+      "learning_rate": 0.026985826062447715,
+      "depth": 5,
+      "l2_leaf_reg": 1.7639155897359318,
+      "border_count": 253,
+      "bagging_temperature": 0.5128196437780776,
+      "random_strength": 1.9180094712444862,
+      "auto_class_weights": "Balanced",
+      "random_seed": 42,
+      "verbose": 0
+    },
+    "cv_metrics": {
+      "train_f2_macro_mean": 0.9053,
+      "train_f2_macro_std": 0.0041,
+      "val_f2_macro_mean": 0.8673,
+      "val_f2_macro_std": 0.0183,
+      "train_f1_macro_mean": 0.886,
+      "train_f1_macro_std": 0.0045,
+      "val_f1_macro_mean": 0.8491,
+      "val_f1_macro_std": 0.0193,
+      "train_accuracy_mean": 0.8929,
+      "train_accuracy_std": 0.0065,
+      "val_accuracy_mean": 0.8555,
+      "val_accuracy_std": 0.008
+    },
+    "test_metrics": {
+      "f2_macro": 0.8281,
+      "f1_macro": 0.8276,
+      "accuracy": 0.871
+    },
+    "per_class": null,
+    "notes": "Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced"
+  }
+]

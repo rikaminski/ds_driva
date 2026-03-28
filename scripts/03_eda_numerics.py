@@ -64,6 +64,20 @@ def main():
         )
         merged_dfs[name] = (merged, cols)
 
+    # ── Campos mortos (variância zero / 100% zeros) ────────────────────────
+    section("1b. CAMPOS MORTOS (variância zero)")
+    found_dead = False
+    for name, (merged, cols) in merged_dfs.items():
+        for col in cols:
+            s = merged[col].dropna()
+            if len(s) == 0:
+                continue
+            if s.std() == 0 or (s == 0).all():
+                found_dead = True
+                print(f"  ⚠️ {name}.{col:30s} | valor único: {s.unique()[0]} | NÃO usar como feature")
+    if not found_dead:
+        print("  ✅ Nenhum campo morto detectado")
+
     # ── Outliers (IQR) ─────────────────────────────────────────────────────
     section("2. OUTLIERS (método IQR)")
     for name, (merged, cols) in merged_dfs.items():
