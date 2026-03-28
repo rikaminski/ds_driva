@@ -10,6 +10,9 @@
 | 6 | 2026-03-28T00:22 | CatBoost | mrmr_top36 | Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced |
 | 7 | 2026-03-28T00:42 | LightGBM | mrmr_top39 | Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced |
 | 8 | 2026-03-28T00:56 | CatBoost | mrmr_top39 | Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced |
+| 9 | 2026-03-28T01:10 | LightGBM | mrmr_top36 | Optuna TPE 100 trials, 5-fold CV, F2 macro, class_weight=balanced |
+| 10 | 2026-03-28T01:14 | CatBoost | mrmr_top36 | Optuna TPE 100 trials, 5-fold CV, F2 macro, auto_class_weights=Balanced |
+| 11 | 2026-03-28T01:22 | Ensemble(LightGBM+CatBoost, 60/40 (LightGBM)) | v3_mrmr_top36 | Ensemble via média de probabilidades (60/40 (LightGBM)). Vieses opostos LightGBM/CatBoost. |
 
 ## Métricas Detalhadas
 
@@ -52,3 +55,18 @@
 - **f2_macro**: 0.8281
 - **f1_macro**: 0.8276
 - **accuracy**: 0.871
+
+### Experimento #9 — LightGBM
+- **f2_macro**: 0.8411
+- **f1_macro**: 0.8317
+- **accuracy**: 0.871
+
+### Experimento #10 — CatBoost
+- **f2_macro**: 0.8155
+- **f1_macro**: 0.8179
+- **accuracy**: 0.871
+
+### Experimento #11 — Ensemble(LightGBM+CatBoost, 60/40 (LightGBM))
+- **f2_macro**: 0.8476
+- **f1_macro**: 0.8397
+- **accuracy**: 0.879
