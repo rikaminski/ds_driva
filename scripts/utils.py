@@ -58,26 +58,61 @@ def load_divida() -> pd.DataFrame:
 
 # ── Harmonização de CNPJ ──────────────────────────────────────────────────────
 
+import re as _re
+
+_CNPJ_INVALID_RE = _re.compile(r"[^0-9eE.+\-/]")
+
+
 def normalize_cnpj(series: pd.Series) -> pd.Series:
     """
     Converte CNPJ para string padronizada com 14 dígitos zero-padded.
-    Trata: notação científica ('1.48007000155E11'), int, float, string com pontuação.
+    Retorna None para CNPJs corrompidos (caracteres inválidos, vazios).
     """
     def _norm(val):
         if pd.isna(val):
             return None
         s = str(val).strip()
+        if not s:
+            return None
+        # Rejeita se contém caracteres inválidos (#, letras fora de E, etc.)
+        if _CNPJ_INVALID_RE.search(s):
+            return None
         # Trata notação científica e floats
         try:
             numeric = int(float(s))
-            return str(numeric).zfill(14)
+            result = str(numeric).zfill(14)
+            # Deve ter exatamente 14 dígitos numéricos
+            if not result.isdigit():
+                return None
+            return result
         except (ValueError, OverflowError):
             pass
         # Remove pontuação restante
         s = s.replace(".", "").replace("-", "").replace("/", "")
+        if not s.isdigit():
+            return None
         return s.zfill(14)
 
     return series.map(_norm)
+
+
+def validate_cnpj_column(df: pd.DataFrame, cnpj_col: str = "cnpj", name: str = "") -> pd.DataFrame:
+    """
+    Valida CNPJs de um DataFrame. Imprime registros corrompidos.
+    Retorna o DataFrame filtrado (sem registros corrompidos).
+    """
+    normed = normalize_cnpj(df[cnpj_col])
+    corrupted_mask = normed.isna() & df[cnpj_col].notna() & (df[cnpj_col].astype(str).str.strip() != "")
+    n_corrupted = corrupted_mask.sum()
+    n_empty = (df[cnpj_col].isna() | (df[cnpj_col].astype(str).str.strip() == "")).sum()
+
+    if n_corrupted > 0 or n_empty > 0:
+        label = f" ({name})" if name else ""
+        print(f"  ⚠️ CNPJs com problemas{label}: {n_corrupted} corrompidos, {n_empty} vazios")
+        for idx in df[corrupted_mask].index[:10]:
+            print(f"    idx={idx} | cnpj={repr(df.loc[idx, cnpj_col])}")
+
+    return df[~corrupted_mask].copy()
 
 
 # ── Helpers de print ──────────────────────────────────────────────────────────

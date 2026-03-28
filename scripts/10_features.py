@@ -103,13 +103,6 @@ def build_eb_features(df: pd.DataFrame) -> pd.DataFrame:
     # Flag de cobertura
     merged["has_eb"] = merged["capital_social_log"].notna().astype(int)
 
-    # ── n_filiais_rede: quantos CNPJs compartilham a mesma raiz_cnpj ──
-    # Proxy de escala: CaC (redes como Atacadão) tem p90=5 filiais vs AS sempre 1
-    raiz_count = eb.groupby("raiz_cnpj").size().reset_index(name="n_filiais_rede")
-    eb_raiz = eb[["cnpj_norm", "raiz_cnpj"]].merge(raiz_count, on="raiz_cnpj", how="left")
-    eb_raiz = eb_raiz[["cnpj_norm", "n_filiais_rede"]]
-    merged = merged.merge(eb_raiz, on="cnpj_norm", how="left")
-
     return merged
 
 
@@ -144,19 +137,6 @@ def build_cnaes_features(df: pd.DataFrame) -> pd.DataFrame:
     secundarios = cnaes[cnaes["tipo_cnae"] == "secundario"]
     sec_count = secundarios.groupby("cnpj_norm").size().reset_index(name="n_cnaes_sec")
 
-    # ── CNAEs secundários discriminativos para AS vs CaC ──
-    # Baseado no EDA: esses CNAEs têm ratio >10x entre CaC e AS
-    DISCRIM_CNAES = {
-        "has_cnae_sec_4711302": 4711302,  # CaC 35.1% vs AS 0.9%
-        "has_cnae_sec_4635499": 4635499,  # CaC 16.3% vs AS 1.1%
-        "has_cnae_sec_4930202": 4930202,  # CaC 14.7% vs AS 1.7%
-        "has_cnae_sec_4649408": 4649408,  # CaC 12.2% vs AS 0.0%
-    }
-    for feat_name, cnae_code in DISCRIM_CNAES.items():
-        has_cnae = secundarios[secundarios["cnae"] == cnae_code][["cnpj_norm"]].drop_duplicates()
-        has_cnae[feat_name] = 1
-        df = df.merge(has_cnae, on="cnpj_norm", how="left")
-        df[feat_name] = df[feat_name].fillna(0).astype(int)
 
     # Merge
     df = df.merge(cnae_df, on="cnpj_norm", how="left")
@@ -389,8 +369,7 @@ def main():
     # Forçar inclusão de features críticas de escala/natureza (achados do EDA)
     forced_features = [
         "porte_ordinal", "is_matriz", "capital_social_log",
-        "nome_contem_atacarejo", "n_cnaes_sec", "has_ifood",
-        "n_filiais_rede",  # proxy de escala (rede de filiais)
+        "nome_contem_atacarejo", "n_cnaes_sec", "has_ifood"
     ]
     # Também incluir as features de CNAE primário se existirem
     cnae_feats = [c for c in feature_cols if c.startswith("cnae_is_")]
